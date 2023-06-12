@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://crowdin-web-components.s3.amazonaws.com/crowdin-web-components.js"></script>
+    <title>TZ Crowdin Integration</title>
+    <style>
+        .crowdin-buttons {
+            display: flex;
+            flex-direction: column;
+            padding-top: 1rem;
+            gap: 0.5rem;
+        }
+
+        .crowdin-download {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<crowdin-files-component search-placeholder="Search something"></crowdin-files-component>
+<div class="crowdin-buttons">
+    <div class="crowdin-download">
+        <crowdin-button primary onclick="downloadFileSelected()">Download selected file</crowdin-button>
+    </div>
+    <crowdin-dnd-upload is-multiple="true"></crowdin-dnd-upload>
+</div>
+<script type="text/javascript">
+    /* GETTING TOKEN */
+    const token = window.localStorage.getItem('token')
+    if (!token) {
+        window.location.replace('/connect')
+    }
+
+    /* GETTING DATA WITH TOKEN */
+    const getData = async () => {
+        const response = await fetch('/home', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+        })
+        let finalData = await response.json();
+        return finalData
+    }
+
+
+    /* SETTING DATA TO CROWDIN COMPONENT */
+    let data = {}
+    let parsedData = {}
+    document.addEventListener('DOMContentLoaded', async () => {
+        let crowdinFiles = document.querySelector("crowdin-files-component");
+        crowdinFiles && crowdinFiles.setAttribute("is-loading", true);
+        data = await getData()
+        if (data.message === 'No access') {
+            window.location.replace('/connect')
+        }
+        parsedData = await JSON.parse(data.data)
+
+        /* Changing data from server */
+        parsedData = {
+            "data": [
+                {
+                    "id": "981",
+                    "type": null,
+                    "status": "1",
+                    "parent_id": "0",
+                    "node_type": "0",
+                    "extension": "",
+                    "priority": "1",
+                    "export_pattern": "",
+                    "name": "Empty folder",
+                    "title": "Some title",
+                    "strings": 1,
+                    "words": 0,
+                    "has_files": true
+                },
+                {
+                    "id": "946",
+                    "type": null,
+                    "status": "1",
+                    "customContent": "<div>Custom content</div>",
+                    "parent_id": "0",
+                    "node_type": "0",
+                    "extension": "",
+                    "priority": "1",
+                    "export_pattern": "",
+                    "name": "\u0442\u0435\u0441\u0442",
+                    "title": "Some title",
+                    "strings": 1,
+                    "words": 0,
+                    "has_files": true
+                },
+                {
+                    "id": "950",
+                    "type": "xlsx",
+                    "status": "3",
+                    "parent_id": "0",
+                    "node_type": "1",
+                    "extension": "xls",
+                    "priority": "1",
+                    "export_pattern": null,
+                    "name": "SampleXLSFile_6800kb.xls",
+                    "title": null,
+                    "upload_ready": 1,
+                    "export_ready": 1,
+                    "export_xliff_ready": 1,
+                    "can_change": 0,
+                    "available_extensions": [
+                        "xlsx",
+                        "xls"
+                    ],
+                    "strings": 0,
+                    "words": 0,
+                    "source_id": 782,
+                    "revision": 1,
+                    "source_scheme": "false"
+                },
+                {
+                    "id": "1064",
+                    "type": null,
+                    "status": "1",
+                    "parent_id": "0",
+                    "node_type": "2",
+                    "extension": "",
+                    "priority": "1",
+                    "export_pattern": null,
+                    "name": "\u0431\u0440\u0435\u043d\u0447",
+                    "title": null,
+                    "strings": 1,
+                    "words": 0,
+                    "has_files": true
+                },
+                {
+                    "id": "6237",
+                    "type": "docx8",
+                    "status": "1",
+                    "parent_id": "0",
+                    "node_type": "1",
+                    "extension": "docx",
+                    "priority": "1",
+                    "export_pattern": null,
+                    "name": "\u041c\u0430\u043c\u0430\u0457\u0432\u0446\u0456.docx",
+                    "title": null,
+                    "upload_ready": 0,
+                    "export_ready": 1,
+                    "export_xliff_ready": 1,
+                    "can_change": 0,
+                    "available_extensions": [
+                        "docx",
+                        "odt",
+                        "xlsx",
+                        "pptx",
+                        "ods",
+                        "odg",
+                        "odp",
+                        "mif"
+                    ],
+                    "strings": 12,
+                    "words": 99,
+                    "source_id": 5843,
+                    "revision": 1,
+                    "source_scheme": "false"
+                },
+                {
+                    "id": "6351",
+                    "type": null,
+                    "status": "1",
+                    "parent_id": "1064",
+                    "node_type": "0",
+                    "extension": "",
+                    "priority": "1",
+                    "export_pattern": null,
+                    "name": "sub folder",
+                    "title": null,
+                    "strings": 1,
+                    "words": 0,
+                    "has_files": true
+                },
+                {
+                    "id": "6353",
+                    "type": "assets",
+                    "status": "1",
+                    "parent_id": "6351",
+                    "node_type": "1",
+                    "extension": "png",
+                    "priority": "1",
+                    "export_pattern": null,
+                    "name": "156.png",
+                    "title": null,
+                    "upload_ready": 1,
+                    "export_ready": 1,
+                    "export_xliff_ready": 0,
+                    "can_change": 0,
+                    "available_extensions": [
+                        "*"
+                    ],
+                    "strings": 1,
+                    "words": 0,
+                    "source_id": 5943,
+                    "revision": 1,
+                    "source_scheme": "false",
+                    "icons": [
+                        {
+                            "title": "Test",
+                            "className": "red",
+                            "icon": "close"
+                        },
+                        {
+                            "title": "Test 2",
+                            "className": "red",
+                            "icon": "done"
+                        },
+                        {
+                            "title": "Test 3",
+                            "className": "red",
+                            "icon": "menu"
+                        }
+                    ],
+                    "iconsByLanguageId": {
+                        "af": [{
+                            "title": "Test 2",
+                            "className": "red",
+                            "icon": "done"
+                        },
+                            {
+                                "title": "Test 3",
+                                "className": "red",
+                                "icon": "menu"
+                            }]
+                    }
+                },
+                {
+                    "id": "6355",
+                    "type": "assets",
+                    "status": "1",
+                    "parent_id": "946",
+                    "node_type": "1",
+                    "extension": "png",
+                    "priority": "1",
+                    "export_pattern": null,
+                    "name": "111.png",
+                    "title": null,
+                    "upload_ready": 1,
+                    "export_ready": 1,
+                    "export_xliff_ready": 0,
+                    "can_change": 0,
+                    "available_extensions": [
+                        "*"
+                    ],
+                    "strings": 1,
+                    "words": 0,
+                    "source_id": 5945,
+                    "revision": 1,
+                    "source_scheme": "false"
+                },
+                {
+                    "id": "13",
+                    "type": "html14",
+                    "status": "1",
+                    "parent_id": "946",
+                    "node_type": "1",
+                    "extension": "html",
+                    "priority": "1",
+                    "export_pattern": null,
+                    "name": "\u0443\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u043e\u044e.html",
+                    "title": null,
+                    "upload_ready": 0,
+                    "export_ready": 1,
+                    "export_xliff_ready": 1,
+                    "can_change": 0,
+                    "available_extensions": [
+                        "htm",
+                        "html",
+                        "xhtml",
+                        "xht",
+                        "shtml",
+                        "hbs"
+                    ],
+                    "strings": 31,
+                    "words": 163,
+                    "source_id": 13,
+                    "revision": 1,
+                    "source_scheme": "false"
+                },
+                {
+                    "id": "15",
+                    "type": "android7",
+                    "status": "1",
+                    "parent_id": "946",
+                    "node_type": "1",
+                    "extension": "xml",
+                    "priority": "1",
+                    "export_pattern": null,
+                    "name": "crowdin_sample_android.xml",
+                    "title": null,
+                    "upload_ready": 1,
+                    "export_ready": 1,
+                    "export_xliff_ready": 1,
+                    "can_change": 0,
+                    "available_extensions": [
+                        "xml"
+                    ],
+                    "strings": 17,
+                    "words": 43,
+                    "source_id": 15,
+                    "revision": 1,
+                    "source_scheme": "false"
+                }
+            ],
+            "request": null,
+            "version": "9"
+        }
+
+        crowdinFiles && crowdinFiles.setFilesData(parsedData.data);
+        crowdinFiles && crowdinFiles.removeAttribute("is-loading");
+    }, false);
+
+
+    /* DOWNLOADING SELECTED FILE */
+    const downloadFileSelected = async () => {
+        let filesToDownload = []
+        const crowdinFiles = document.querySelector("crowdin-files-component");
+        crowdinFiles.getSelected().then(async (selected) => {
+            filesToDownload = selected
+            if (filesToDownload.length > 1) {
+                alert('You can download only 1 file at a time')
+                return
+            }
+            const response = await fetch('/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(filesToDownload)
+            })
+            const finalData = await response.json();
+            window.location.replace(finalData.url)
+        })
+    }
+
+
+    /* UPLOADING FILE */
+    document.querySelector("crowdin-dnd-upload").addEventListener("upload", async (e) => {
+        let directoryId = ''
+        const crowdinFiles = document.querySelector("crowdin-files-component");
+        const reader = new FileReader();
+        const name = e.detail[0].name
+        let fileBinary = ''
+        reader.onload = async function (e) {
+            fileBinary = (e.target.result);
+
+            /* GETTING DIRECTORY ID ONLY TO SHOW A POSSIBLE SOLUTION */
+            crowdinFiles.getSelected().then(async (selected) => {
+                directoryId = selected[0].directoryId
+            })
+
+            const response = await fetch('/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    fileName: name,
+                    binary: fileBinary,
+                    directoryId: 3
+                })
+            })
+
+            const data = await response.json();
+            if (data.message === 'success') {
+                window.location.reload()
+            }
+        };
+        reader.readAsText(e.detail[0]);
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TZ Crowdin Integration</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .connect-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .connect-form {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            font-size: 1.5rem;
+        }
+
+        .connect-form input, .connect-form button {
+            font-size: 1.5rem;
+        }
+
+        .connect-form div {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="connect-container">
+    <div class="connect-form">
+        <div>
+            <label for="projectConnect">Project ID</label>
+            <input type="text" id="projectConnect">
+        </div>
+        <div>
+            <label for="tokenConnect">Personal Access Token</label>
+            <input type="text" id="tokenConnect">
+        </div>
+        <button id="submit" type="submit">Connect</button>
+    </div>
+</div>
+<script>
+    const connect = async (url = '', data = {}) => {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        let finalData = await response.json();
+        return finalData
+    }
+
+    let submit = document.getElementById('submit')
+    submit.addEventListener('click', async () => {
+        let projectId = document.getElementById('projectConnect').value
+        let tokenCrowdin = document.getElementById('tokenConnect').value
+        let data = await connect('/connect', {projectId, tokenCrowdin})
+        if ('jwtToken' in data) {
+            window.localStorage.setItem('token', data.jwtToken)
+            window.location.replace('/')
+        }
+    })
+</script>
+</body>
+</html>
