@@ -1,6 +1,6 @@
 <h1>Crowdin integration app</h1>
 <h2>Demo</h2>
-![Screen](./src/assets/2.jpg)
+![Screen](https://github.com/Buritos16/tz-crowdin/blob/master/src/assets/1.jpg?raw=true)
 <h2>To run the application:</h2>
 
 - Clone or download source code from current Github repository.
