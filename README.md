@@ -1,4 +1,3 @@
-<h1>Crowdin integration app</h1>
 ## Demo
 ![Screenshot](src/assets/2.jpg)
 ![Screenshot](src/assets/1.jpg)
