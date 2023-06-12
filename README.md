@@ -1,7 +1,7 @@
 <h1>Crowdin integration app</h1>
-<h2>Demo</h2>
-![2]()
-![1](https://github.com/Buritos16/tz-crowdin/assets/86673573/fa1e24be-228e-4cfc-a8c3-e5f514e7bc98)
+## Demo
+![Screenshot](src/assets/2.jpg)
+![Screenshot](src/assets/1.jpg)
 
 <h2>To run the application:</h2>
 
@@ -15,6 +15,3 @@
 
 - Enjoy!
 
-
-## Screenshots
-![Screenshot](src/assets/1.jpg)
